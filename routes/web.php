@@ -35,8 +35,19 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),'middleware' => [ 'lo
 ################## type credit
     Route::resource('typeCredit','TypeCreditController');
 
+################## Actions
+    Route::resource('actions','ActionController');
+
+################## Regions
+    Route::resource('regions','DRController');
+
+################## qualites
+    Route::resource('qualites','QualiteController');
+
+################## Attributions
+    Route::resource('attributions','AttributionController');
+
 });
 
-Route::get('/redirect_back',function (){
-    return back();
-})->name('redirect');
+
+

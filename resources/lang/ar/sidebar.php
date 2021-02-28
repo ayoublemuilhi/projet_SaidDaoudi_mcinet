@@ -23,4 +23,28 @@ return [
     'typeCredit' => 'نوع الائتمان',
     'liste typeCredit' => 'قائمة نوع الائتمان',
 
+
+    ########################### Actions
+    'actions' => 'الأحداث ',
+    'liste action' => 'قائمةالأحداث',
+
+    ########################### Regions
+    'regions' => 'المناطق ',
+    'liste region' => 'قائمة المناطق',
+
+    ########################### qualites
+    'qualites' => 'الصفات ',
+    'liste qualite' => 'قائمة الصفات',
+
+    ########################### attributions
+    'attributions' => 'الإسناد ',
+    'liste attribution' => 'قائمة الإسنادات',
+
+
+
+
+    ############################################# for return back button
+
+    'return' => 'العودة إلى القائمة',
+
 ];

@@ -22,4 +22,30 @@ return [
     ########################### type credit
     'typeCredit' => 'Type Credit',
     'liste typeCredit' => 'liste des Type Credits',
+
+    ########################### actions
+    'actions' => 'Événements ',
+    'liste action' => 'Liste des événements',
+
+    ########################### Regions
+    'regions' => 'Regions ',
+    'liste region' => 'Liste des regions',
+
+    ########################### qualites
+    'qualites' => 'Qualité ',
+    'liste qualite' => 'Liste des Qualités',
+
+    ########################### attributions
+    'attributions' => 'Attributions ',
+    'liste attribution' => 'Liste des attributions',
+
+
+
+
+
+    ############################################# for return back button
+
+    'return' => 'Retour à la liste ',
+
+
 ];

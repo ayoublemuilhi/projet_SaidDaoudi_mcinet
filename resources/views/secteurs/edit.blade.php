@@ -20,6 +20,10 @@
 @endsection
 @section('content')
     <!-- row -->
+    <div class=" pb-0">
+        <a href="{{route('secteurs.index')}}" class="btn btn-primary" style="color: whitesmoke"><i class="fas fa-undo"></i> @lang('sidebar.return') </a>
+
+    </div>
     <div class="row">
         <div class="col-lg-2 col-md-2"></div>
 

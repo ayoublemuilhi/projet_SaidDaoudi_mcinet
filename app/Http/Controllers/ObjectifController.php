@@ -62,6 +62,7 @@ class ObjectifController extends Controller
         $request->validate([
             'objectif_fr' => 'required|max:255|unique:objectifs,objectif_fr,'.$objectif_id,
             'objectif_ar' => 'required|max:255|unique:objectifs,objectif_ar,'.$objectif_id,
+            'secteur' => 'required'
 
         ],[
             'objectif_fr.required' => __('objectifs.objectif_fr required'),

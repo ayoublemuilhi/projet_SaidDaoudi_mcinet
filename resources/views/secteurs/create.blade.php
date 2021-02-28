@@ -20,13 +20,22 @@
 @endsection
 @section('content')
     <!-- row -->
+    <div class=" pb-0">
+        <a href="{{route('secteurs.index')}}" class="btn btn-primary" style="color: whitesmoke"><i class="fas fa-undo"></i> @lang('sidebar.return') </a>
+
+    </div>
     <div class="row">
         <div class="col-lg-2 col-md-2"></div>
 
+
+
         <div class="col-lg-8 col-md-8">
+
             <div class="card">
                 @include('layouts.errors_success')
+
                 <div class="card-body">
+
                     <form action="{{route('secteurs.store')}}" method="POST" autocomplete="off">
                         @csrf
 

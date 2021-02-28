@@ -18,14 +18,7 @@
 		</div>
 		<!-- /Loader -->
 		@include('layouts.sidebar')
-<style>
-    /* scroll bar for sidebar*/
-    .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
-        width: 6px !important;
-        background-color: #464242 !important;
-        height: 100px !important;
-    }
-</style>
+
 		<!-- main-content -->
 		<div class="main-content app-content">
 			@include('layouts.header')

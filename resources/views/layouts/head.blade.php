@@ -18,6 +18,9 @@
 <link href="{{URL::asset('assets/css-rtl/style-dark.css')}}" rel="stylesheet">
 <!---Skinmodes css-->
 <link href="{{URL::asset('assets/css-rtl/skin-modes.css')}}" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet">
+<link href="{{URL::asset('assets/css-rtl/custom_style.css')}}" rel="stylesheet">
 @else
     <link rel="stylesheet" href="{{URL::asset('assets/css/sidemenu.css')}}">
     <!--- Style css -->
@@ -26,19 +29,9 @@
     <link href="{{URL::asset('assets/css/style-dark.css')}}" rel="stylesheet">
     <!---Skinmodes css-->
     <link href="{{URL::asset('assets/css/skin-modes.css')}}" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
+    <link href="{{URL::asset('assets/css/custom_style.css')}}" rel="stylesheet">
 @endif
-<style>
-    .error,.success{
-        padding: 20px;
-        color: white;
-        opacity: 0.97;
-    }
-    .alert-error {
-        background-color: #f44336;
-        box-shadow: 1px 1px 9px #f44336;
-    }
-    .alert-success {
-        background-color: #6BBD6E;
-        box-shadow: 1px 1px 9px  #6BBD6E;
-    }
-</style>
+
