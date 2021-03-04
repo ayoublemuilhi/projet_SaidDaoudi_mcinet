@@ -33,41 +33,48 @@
                     <a href="{{route('indicateurs.create')}}" class="btn btn-primary" style="color: whitesmoke"><i class="fas fa-plus"></i> @lang('indicateurs.add indicateur') </a>
                 </div>
                 <div class="card-body">
-                    <div class="table-responsive">
-                        <table id="example1" class="table key-buttons text-md-nowrap">
-                            <thead>
-                            <tr>
-                                <th class="border-bottom-0">#</th>
-                                <th class="border-bottom-0">@lang('indicateurs.nom_indicateur')</th>
-                                <th class="border-bottom-0">@lang('indicateurs.action')</th>
-
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <?php $i = 0 ?>
-                            @forelse($indicateurs as $indicateur)
+                    @if($indicateurs->count() > 0)
+                        <div class="table-responsive">
+                            <table id="example1" class="table key-buttons text-md-nowrap">
+                                <thead>
                                 <tr>
-
-                                    <td>{{++$i}}</td>
-                                    <td>{{$indicateur->indicateur}}</td>
-                                    <td>
-                                        <a class="btn btn-sm btn-info"  href="{{route('indicateurs.edit',$indicateur->id)}}" title="@lang('indicateurs.title edit')"><i class="las la-pen"></i></a>
-                                        <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale" data-id="{{ $indicateur->id }}"
-                                           data-indicateur_name="{{ $indicateur->indicateur}}" data-toggle="modal" href="#supprimer_indic"
-                                           title="@lang('indicateurs.title supprimer')"><i
-                                                class="las la-trash"></i></a>
-
-                                    </td>
+                                    <th class="border-bottom-0">#</th>
+                                    <th class="border-bottom-0">@lang('indicateurs.nom_indicateur')</th>
+                                    <th class="border-bottom-0">@lang('indicateurs.action')</th>
 
                                 </tr>
-                            @empty
+                                </thead>
+                                <tbody>
+                                <?php $i = 0 ?>
+                                @foreach($indicateurs as $indicateur)
+                                    <tr>
 
-                            @endforelse
+                                        <td>{{++$i}}</td>
+                                        <td>{{$indicateur->indicateur}}</td>
+                                        <td>
+                                            <a class="btn btn-sm btn-info"  href="{{route('indicateurs.edit',$indicateur->id)}}" title="@lang('indicateurs.title edit')"><i class="las la-pen"></i></a>
+                                            <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale" data-id="{{ $indicateur->id }}"
+                                               data-indicateur_name="{{ $indicateur->indicateur}}" data-toggle="modal" href="#supprimer_indic"
+                                               title="@lang('indicateurs.title supprimer')"><i
+                                                    class="las la-trash"></i></a>
+
+                                        </td>
+
+                                    </tr>
+                                @endforeach
 
 
-                            </tbody>
-                        </table>
-                    </div>
+                                </tbody>
+                            </table>
+                        </div>
+                    @else
+
+                        <div>
+                            <img width="100%" height="300px" src="{{asset('assets/img/svgicons/no-data.svg')}}">
+                        </div>
+
+                    @endif
+
                 </div>
             </div>
         </div>

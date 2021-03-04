@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
+
 Route::group(['prefix' => LaravelLocalization::setLocale(),'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]], function()
 {
 ################## Dashboard
@@ -46,6 +47,12 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),'middleware' => [ 'lo
 
 ################## Attributions
     Route::resource('attributions','AttributionController');
+
+################## Dpci
+    Route::resource('dpci','DpciController');
+
+################## Axes
+    Route::resource('axes','AxeController');
 
 });
 

@@ -32,43 +32,51 @@
                 <div class="card-header pb-0">
                     <a href="{{route('typeCredit.create')}}" class="btn btn-primary" style="color: whitesmoke"><i class="fas fa-plus"></i> @lang('type_credit.add type credit') </a>
                 </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table id="example1" class="table key-buttons text-md-nowrap">
-                            <thead>
-                            <tr>
-                                <th class="border-bottom-0">#</th>
-                                <th class="border-bottom-0">@lang('type_credit.nom_type_credit')</th>
-                                <th class="border-bottom-0">@lang('type_credit.action')</th>
-
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <?php $i = 0 ?>
-                            @forelse($type_credits as $type_credit)
+                @if($type_credits->count() > 0)
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="example1" class="table key-buttons text-md-nowrap">
+                                <thead>
                                 <tr>
-
-                                    <td>{{++$i}}</td>
-                                    <td>{{$type_credit->type_credit}}</td>
-                                    <td>
-                                        <a class="btn btn-sm btn-info"  href="{{route('typeCredit.edit',$type_credit->id)}}" title="@lang('type_credit.title edit')"><i class="las la-pen"></i></a>
-                                        <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale" data-id="{{$type_credit->id}}"
-                                           data-credit="{{$type_credit->type_credit}}" data-toggle="modal" href="#supprimer_credit"
-                                           title="@lang('type_credit.title supprimer')"><i
-                                                class="las la-trash"></i></a>
-
-                                    </td>
+                                    <th class="border-bottom-0">#</th>
+                                    <th class="border-bottom-0">@lang('type_credit.nom_type_credit')</th>
+                                    <th class="border-bottom-0">@lang('type_credit.action')</th>
 
                                 </tr>
-                            @empty
+                                </thead>
+                                <tbody>
+                                <?php $i = 0 ?>
+                                @forelse($type_credits as $type_credit)
+                                    <tr>
 
-                            @endforelse
+                                        <td>{{++$i}}</td>
+                                        <td>{{$type_credit->type_credit}}</td>
+                                        <td>
+                                            <a class="btn btn-sm btn-info"  href="{{route('typeCredit.edit',$type_credit->id)}}" title="@lang('type_credit.title edit')"><i class="las la-pen"></i></a>
+                                            <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale" data-id="{{$type_credit->id}}"
+                                               data-credit="{{$type_credit->type_credit}}" data-toggle="modal" href="#supprimer_credit"
+                                               title="@lang('type_credit.title supprimer')"><i
+                                                    class="las la-trash"></i></a>
+
+                                        </td>
+
+                                    </tr>
+                                @empty
+
+                                @endforelse
 
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
+                @else
+                    <div>
+                        <img width="100%" height="300px" src="{{asset('assets/img/svgicons/no-data.svg')}}">
+                    </div>
+
+                @endif
+
             </div>
         </div>
 

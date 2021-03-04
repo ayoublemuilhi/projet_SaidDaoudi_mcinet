@@ -32,43 +32,52 @@
                 <div class="card-header pb-0">
                     <a href="{{route('regions.create')}}" class="btn btn-primary" style="color: whitesmoke"><i class="fas fa-plus"></i> @lang('regions.add region') </a>
                 </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table id="example1" class="table key-buttons text-md-nowrap">
-                            <thead>
-                            <tr>
-                                <th class="border-bottom-0">#</th>
-                                <th class="border-bottom-0">@lang('regions.nom_region')</th>
-                                <th class="border-bottom-0">@lang('regions.region')</th>
-
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <?php $i = 0 ?>
-                            @forelse($regions as $region)
+                @if($regions->count() > 0)
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="example1" class="table key-buttons text-md-nowrap">
+                                <thead>
                                 <tr>
-
-                                    <td>{{++$i}}</td>
-                                    <td>{{$region->region}}</td>
-                                    <td>
-                                        <a class="btn btn-sm btn-info"  href="{{route('regions.edit',$region->id)}}" title="@lang('regions.title edit')"><i class="las la-pen"></i></a>
-                                        <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale" data-id="{{ $region->id }}"
-                                           data-region_name="{{ $region->region }}" data-toggle="modal" href="#supprimer_region"
-                                           title="@lang('regions.title supprimer')"><i
-                                                class="las la-trash"></i></a>
-
-                                    </td>
+                                    <th class="border-bottom-0">#</th>
+                                    <th class="border-bottom-0">@lang('regions.nom_region')</th>
+                                    <th class="border-bottom-0">@lang('regions.region')</th>
 
                                 </tr>
-                            @empty
+                                </thead>
+                                <tbody>
+                                <?php $i = 0 ?>
+                                @forelse($regions as $region)
+                                    <tr>
 
-                            @endforelse
+                                        <td>{{++$i}}</td>
+                                        <td>{{$region->region}}</td>
+                                        <td>
+                                            <a class="btn btn-sm btn-info"  href="{{route('regions.edit',$region->id)}}" title="@lang('regions.title edit')"><i class="las la-pen"></i></a>
+                                            <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale" data-id="{{ $region->id }}"
+                                               data-region_name="{{ $region->region }}" data-toggle="modal" href="#supprimer_region"
+                                               title="@lang('regions.title supprimer')"><i
+                                                    class="las la-trash"></i></a>
+
+                                        </td>
+
+                                    </tr>
+                                @empty
+
+                                @endforelse
 
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
+                @else
+                    <div>
+                        <img width="100%" height="300px" src="{{asset('assets/img/svgicons/no-data.svg')}}">
+                    </div>
+
+                @endif
+
+
             </div>
         </div>
 

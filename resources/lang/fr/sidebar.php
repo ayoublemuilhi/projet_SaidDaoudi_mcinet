@@ -39,7 +39,13 @@ return [
     'attributions' => 'Attributions ',
     'liste attribution' => 'Liste des attributions',
 
+    ########################### Dpci
+    'dpci' => 'Provinces',
+    'liste dpci' => 'Liste des Provinces',
 
+    ########################### Axes
+    'axes' => 'Axes',
+    'liste axes' => 'Liste des Axes',
 
 
 

@@ -32,6 +32,7 @@
                 <div class="card-header pb-0">
                     <a href="{{route('unites.create')}}" class="btn btn-primary" style="color: whitesmoke"><i class="fas fa-plus"></i> @lang('unites.add unite') </a>
                 </div>
+                @if($unites->count() > 0)
                 <div class="card-body">
                     <div class="table-responsive">
                         <table id="example1" class="table key-buttons text-md-nowrap">
@@ -69,6 +70,12 @@
                         </table>
                     </div>
                 </div>
+                @else
+                    <div>
+                        <img width="100%" height="300px" src="{{asset('assets/img/svgicons/no-data.svg')}}">
+                    </div>
+
+                @endif
             </div>
         </div>
 

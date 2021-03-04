@@ -32,45 +32,53 @@
                 <div class="card-header pb-0">
                     <a href="{{route('objectifs.create')}}" class="btn btn-primary" style="color: whitesmoke"><i class="fas fa-plus"></i> @lang('objectifs.add objectif') </a>
                 </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table id="example1" class="table key-buttons text-md-nowrap">
-                            <thead>
-                            <tr>
-                                <th class="border-bottom-0">#</th>
-                                <th class="border-bottom-0">@lang('objectifs.nom_objectif')</th>
-                                <th class="border-bottom-0">@lang('objectifs.nom_secteur')</th>
-                                <th class="border-bottom-0">@lang('objectifs.action')</th>
-
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <?php $i = 0 ?>
-                            @forelse($objectifs as $objectif)
+                @if($objectifs->count() > 0)
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="example1" class="table key-buttons text-md-nowrap">
+                                <thead>
                                 <tr>
-
-                                    <td>{{++$i}}</td>
-                                    <td>{{$objectif->objectif}}</td>
-                                    <td>{{$objectif->secteur->secteur}}</td>
-                                    <td>
-                                        <a class="btn btn-sm btn-info"  href="{{route('objectifs.edit',$objectif->id)}}" title="@lang('objectifs.title edit')"><i class="las la-pen"></i></a>
-                                        <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale" data-id="{{ $objectif->id }}"
-                                           data-objectif_name="{{ $objectif->objectif }}" data-toggle="modal" href="#supprimer_objectif"
-                                           title="@lang('unites.title supprimer')"><i
-                                                class="las la-trash"></i></a>
-
-                                    </td>
+                                    <th class="border-bottom-0">#</th>
+                                    <th class="border-bottom-0">@lang('objectifs.nom_objectif')</th>
+                                    <th class="border-bottom-0">@lang('objectifs.nom_secteur')</th>
+                                    <th class="border-bottom-0">@lang('objectifs.action')</th>
 
                                 </tr>
-                            @empty
+                                </thead>
+                                <tbody>
+                                <?php $i = 0 ?>
+                                @forelse($objectifs as $objectif)
+                                    <tr>
 
-                            @endforelse
+                                        <td>{{++$i}}</td>
+                                        <td>{{$objectif->objectif}}</td>
+                                        <td>{{$objectif->secteur->secteur}}</td>
+                                        <td>
+                                            <a class="btn btn-sm btn-info"  href="{{route('objectifs.edit',$objectif->id)}}" title="@lang('objectifs.title edit')"><i class="las la-pen"></i></a>
+                                            <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale" data-id="{{ $objectif->id }}"
+                                               data-objectif_name="{{ $objectif->objectif }}" data-toggle="modal" href="#supprimer_objectif"
+                                               title="@lang('unites.title supprimer')"><i
+                                                    class="las la-trash"></i></a>
+
+                                        </td>
+
+                                    </tr>
+                                @empty
+
+                                @endforelse
 
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
+                @else
+                    <div>
+                        <img width="100%" height="300px" src="{{asset('assets/img/svgicons/no-data.svg')}}">
+                    </div>
+
+                @endif
+
             </div>
         </div>
 

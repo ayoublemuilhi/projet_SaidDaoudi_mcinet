@@ -35,45 +35,53 @@
 
                     <a href="{{route('attributions.create')}}" class="btn btn-primary" style="color: whitesmoke"><i class="fas fa-plus"></i> @lang('attributions.add attribution') </a>
                 </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table id="example1" class="table key-buttons text-md-nowrap">
-                            <thead>
-                            <tr>
-                                <th class="border-bottom-0">#</th>
-                                <th class="border-bottom-0">@lang('attributions.nom_attribution')</th>
-                                <th class="border-bottom-0">@lang('attributions.nom_secteur')</th>
-                                <th class="border-bottom-0">@lang('attributions.action')</th>
-
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <?php $i = 0 ?>
-                            @forelse($attributions as $attribution)
+                @if($attributions->count() > 0)
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="example1" class="table key-buttons text-md-nowrap">
+                                <thead>
                                 <tr>
-
-                                    <td>{{++$i}}</td>
-                                    <td>{{$attribution->attribution}}</td>
-                                    <td>{{$attribution->secteur->secteur}}</td>
-                                    <td>
-                                        <a class="btn btn-sm btn-info"  href="{{route('attributions.edit',$attribution->id)}}" title="@lang('attributions.title edit')"><i class="las la-pen"></i></a>
-                                        <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale" data-id="{{ $attribution->id }}"
-                                           data-attribution_name="{{ $attribution->attribution }}" data-toggle="modal" href="#supprimer_attribution"
-                                           title="@lang('attributions.title supprimer')"><i
-                                                class="las la-trash"></i></a>
-
-                                    </td>
+                                    <th class="border-bottom-0">#</th>
+                                    <th class="border-bottom-0">@lang('attributions.nom_attribution')</th>
+                                    <th class="border-bottom-0">@lang('attributions.nom_secteur')</th>
+                                    <th class="border-bottom-0">@lang('attributions.action')</th>
 
                                 </tr>
-                            @empty
+                                </thead>
+                                <tbody>
+                                <?php $i = 0 ?>
+                                @forelse($attributions as $attribution)
+                                    <tr>
 
-                            @endforelse
+                                        <td>{{++$i}}</td>
+                                        <td>{{$attribution->attribution}}</td>
+                                        <td>{{$attribution->secteur->secteur}}</td>
+                                        <td>
+                                            <a class="btn btn-sm btn-info"  href="{{route('attributions.edit',$attribution->id)}}" title="@lang('attributions.title edit')"><i class="las la-pen"></i></a>
+                                            <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale" data-id="{{ $attribution->id }}"
+                                               data-attribution_name="{{ $attribution->attribution }}" data-toggle="modal" href="#supprimer_attribution"
+                                               title="@lang('attributions.title supprimer')"><i
+                                                    class="las la-trash"></i></a>
+
+                                        </td>
+
+                                    </tr>
+                                @empty
+
+                                @endforelse
 
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
+                @else
+                    <div>
+                        <img width="100%" height="300px" src="{{asset('assets/img/svgicons/no-data.svg')}}">
+                    </div>
+
+                @endif
+
             </div>
         </div>
 
