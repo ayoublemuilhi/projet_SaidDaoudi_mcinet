@@ -6,17 +6,21 @@
         <div class="img">
             <img src="{{asset('img/bg.svg')}}">
         </div>
+
         <div class="login-content">
-            <form action="index.html">
+
+            <form method="POST" action="{{route('login') }}">
+                @csrf
                 <img class="img_mobile" src="{{asset('img/logo.png')}}" >
+                @include('layouts.errors_success')
                 <h2 class="title"></h2>
                 <div class="input-div one">
                     <div class="i">
                         <i class="fas fa-user"></i>
                     </div>
                     <div class="div">
-                        <h5>Email</h5>
-                        <input type="email" class="input">
+
+                        <input type="email"  name="email" placeholder="Email">
                     </div>
                 </div>
                 <div class="input-div pass">
@@ -24,8 +28,8 @@
                         <i class="fas fa-lock"></i>
                     </div>
                     <div class="div">
-                        <h5>Mot De Passe</h5>
-                        <input type="password" class="input">
+
+                        <input type="password"  name="password" placeholder="Mot De Passe">
                     </div>
                 </div>
                 <br>

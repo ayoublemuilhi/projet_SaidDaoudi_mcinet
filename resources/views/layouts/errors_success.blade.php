@@ -14,6 +14,13 @@
     </div>
 @endif
 
+
+@if(Session::has('status'))
+    <div class="alert-success success" id="alert-message">
+        <span class="closebtn">{{Session::get('status')}}</span>
+    </div>
+@endif
+
 @if(Session::has('error'))
     <div class="alert-error error" style="margin: 22px;" id="alert-message">
         <span class="closebtn">{{Session::get('error')}}</span>
