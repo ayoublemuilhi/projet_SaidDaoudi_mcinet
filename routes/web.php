@@ -13,48 +13,59 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function () {
+    return view('auth.login');
+});
+
+
+Auth::routes(['register' => false]);
 
 
 
-Route::group(['prefix' => LaravelLocalization::setLocale(),'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]], function()
-{
+Route::group(['middleware' => 'auth'],function (){
+    Route::group(['prefix' => LaravelLocalization::setLocale(),'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]], function()
+    {
 ################## Dashboard
-    Route::resource('/','DashboardController');
+        Route::resource('/dashboard', 'HomeController');
 
 ################## Secteurs
-    Route::resource('secteurs','SecteurController');
+        Route::resource('secteurs','SecteurController');
 
 ################## Indicateurs
-    Route::resource('indicateurs','IndicateurController');
+        Route::resource('indicateurs','IndicateurController');
 
 ################## Unites
-    Route::resource('unites','UniteController');
+        Route::resource('unites','UniteController');
 
 ################## Objectifs
-    Route::resource('objectifs','ObjectifController');
+        Route::resource('objectifs','ObjectifController');
 
 ################## type credit
-    Route::resource('typeCredit','TypeCreditController');
+        Route::resource('typeCredit','TypeCreditController');
 
 ################## Actions
-    Route::resource('actions','ActionController');
+        Route::resource('actions','ActionController');
 
 ################## Regions
-    Route::resource('regions','DRController');
+        Route::resource('regions','DRController');
 
 ################## qualites
-    Route::resource('qualites','QualiteController');
+        Route::resource('qualites','QualiteController');
 
 ################## Attributions
-    Route::resource('attributions','AttributionController');
+        Route::resource('attributions','AttributionController');
 
 ################## Dpci
-    Route::resource('dpci','DpciController');
+        Route::resource('dpci','DpciController');
 
 ################## Axes
-    Route::resource('axes','AxeController');
+        Route::resource('axes','AxeController');
 
+    });
 });
+
+
+
 
 
 

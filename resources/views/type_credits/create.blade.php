@@ -21,7 +21,7 @@
 @section('content')
     <!-- row -->
     <div class=" pb-0">
-        <a href="{{route('type_credit.index')}}" class="btn btn-primary" style="color: whitesmoke"><i class="fas fa-undo"></i> @lang('sidebar.return') </a>
+        <a href="{{route('typeCredit.index')}}" class="btn btn-primary" style="color: whitesmoke"><i class="fas fa-undo"></i> @lang('sidebar.return') </a>
 
     </div>
     <div class="row">
