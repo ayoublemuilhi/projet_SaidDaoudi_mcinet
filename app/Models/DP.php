@@ -15,5 +15,19 @@ class DP extends Model
     public function region(){
         return $this->belongsTo(DR::class,'dr_id','id');
     }
+
+    public function rhsd(){
+        return $this->hasMany(Rhsd::class,'domaine_id','id');
+    }
+
+
     ############################### End Relation
+
+
+    ################## Accessors #####################
+
+    public function getTypeAttribute($val){
+       return  $val == "P" ? 'Province' : 'Region';
+    }
+
 }

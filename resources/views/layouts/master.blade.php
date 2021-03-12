@@ -8,7 +8,13 @@
 		<meta name="Author" content="mcinet">
 		<meta name="Keywords" content="mcinet"/>
 		@include('layouts.head')
-
+<style>
+    .hoverable-table .btn-primary{
+        margin-left: 0;
+        margin-right: 0;
+        position: static;
+    }
+</style>
 	</head>
 
 	<body class="main-body app sidebar-mini">
@@ -26,8 +32,6 @@
 			<div class="container-fluid">
 				@yield('page-header')
 				        @yield('content')
-
-
 
 				@include('layouts.footer')
 

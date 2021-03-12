@@ -33,6 +33,9 @@ class CreateRhsdTable extends Migration
             $table->tinyInteger('EtatSD')->comment('1 => active 0=> inactive');
             $table->tinyInteger('RejetSD')->comment('1 => Rejet 0=> non Rejet');
 
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+
             $table->softDeletes();
             $table->timestamps();
         });

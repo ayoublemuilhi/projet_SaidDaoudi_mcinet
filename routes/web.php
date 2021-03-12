@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+define('ROLE','sys');
 
 Route::get('/', function () {
     return view('auth.login');
@@ -25,6 +26,12 @@ Auth::routes(['register' => false]);
 Route::group(['middleware' => 'auth'],function (){
     Route::group(['prefix' => LaravelLocalization::setLocale(),'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]], function()
     {
+################## Roles
+        Route::resource('roles','RoleController');
+
+################## Users
+        Route::resource('users','UserController');
+
 ################## Dashboard
         Route::resource('/dashboard', 'HomeController');
 
@@ -60,6 +67,15 @@ Route::group(['middleware' => 'auth'],function (){
 
 ################## Axes
         Route::resource('axes','AxeController');
+
+################## Rhsd
+        Route::resource('rhsd','RhsdController');
+
+
+
+
+
+
 
     });
 });

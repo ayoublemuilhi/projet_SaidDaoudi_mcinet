@@ -2,7 +2,19 @@ body{
     font-family: 'Montserrat', sans-serif;
 }
 /********************************************** Start  message request   ***************************/
-
+.error,.success{
+    padding: 20px;
+    color: white;
+    opacity: 0.97;
+}
+.alert-error {
+    background-color: #f44336;
+    box-shadow: 1px 1px 9px #f44336;
+}
+.alert-success {
+    background-color: #6BBD6E;
+    box-shadow: 1px 1px 9px  #6BBD6E;
+}
 
 /********************************************** End  message request   ***************************/
 

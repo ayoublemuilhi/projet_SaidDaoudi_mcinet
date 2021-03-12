@@ -48,7 +48,7 @@ class LoginController extends Controller
             'password' => 'required|string',
         ],[
             'email.required' => 'Le champ email est obligatoire.',
-            'password.required' => 'Le champ du mot de passe est obligatoire.'
+            'password.required' => 'Le champ  mot de passe est obligatoire.'
         ]);
 
     }

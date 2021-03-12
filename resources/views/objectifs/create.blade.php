@@ -62,7 +62,7 @@
                             <select name="secteur" class="form-control SlectBox">
                                 <option value=""   selected disabled>@lang('objectifs.form select')</option>
                                 @foreach($secteurs as $secteur)
-                                    <option value="{{$secteur->id}}">{{$secteur->secteur}}</option>
+                                    <option value="{{$secteur->id}}" {{ (collect(old('secteur'))->contains($secteur->id)) ? 'selected':'' }}>{{$secteur->secteur}}</option>
 
                                 @endforeach
 

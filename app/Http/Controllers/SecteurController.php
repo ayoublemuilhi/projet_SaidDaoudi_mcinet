@@ -47,7 +47,7 @@ class SecteurController extends Controller
     {
        $secteur = Secteur::find($id);
         if(!$secteur){
-            return redirect()->back();
+            return redirect()->route('secteurs.index');
         }
       return view('secteurs.edit',compact('secteur'));
     }
@@ -85,6 +85,7 @@ class SecteurController extends Controller
     {
 
         $secteur = Secteur::find($request->id);
+
         $secteur->delete();
 
         Session::flash('success',__('secteurs.secteur success in supprimer'));
