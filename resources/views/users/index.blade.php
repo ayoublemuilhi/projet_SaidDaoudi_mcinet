@@ -43,6 +43,7 @@
 
                     </div>
                 </div>
+
                 <div class="card-body">
                     <div class="table-responsive hoverable-table">
                         <table class="table table-hover" id="example1" data-page-length='50' style=" text-align: center;">

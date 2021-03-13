@@ -46,16 +46,58 @@
                                     <th class="border-bottom-0">Objectif</th>
                                     <th class="border-bottom-0">Realisation</th>
                                     <th class="border-bottom-0">Ecart</th>
-                                    <th class="border-bottom-0">Rejet </th>
-                                    <th class="border-bottom-0">Etat </th>
+
+                                        <th class="border-bottom-0">Rejet </th>
+                                    @hasanyrole('sys')
+                                        <th class="border-bottom-0">Etat </th>
+                                    @else
+                                        @endhasanyrole
+
+                                    <th class="border-bottom-0">utilisateur </th>
                                     <th class="border-bottom-0">Description </th>
                                     <th class="border-bottom-0">Motif</th>
 
                                 </tr>
                                 </thead>
                                 <tbody>
-                               <tr>
-                                <td>test rhds</td>
+
+                                   @forelse($rhsds as $rhsd)
+                                       <tr @if($rhsd->RejetSD == 1) style="background-color: #ffa6a6 !important;}" @endif>
+                                       <td>{{$loop->iteration}}</td>
+                                       <td>{{$rhsd->qualite->qualite}}</td>
+                                       <td>{{$rhsd->dpci->domaine}}</td>
+                                       <td>{{$rhsd->axe->axe}}</td>
+                                       <td>{{$rhsd->DateSD}}</td>
+                                       <td>{{$rhsd->ObjectifSD}}</td>
+                                       <td>{{$rhsd->RealisationSD}}</td>
+                                       <td>{{$rhsd->EcartSD}}</td>
+
+                                       <td>
+                                           @if($rhsd->RejetSD == 0)
+                                               <label class="badge badge-success">Non</label>
+                                           @else
+                                               <label class="badge badge-danger"> Oui</label>
+                                           @endif
+
+                                       </td>
+                                           @hasanyrole('sys')
+                                       <td>
+                                           @if($rhsd->EtatSD == 0)
+                                               <label class="badge badge-success">{{ $rhsd->EtatSD }}</label>
+                                           @else
+                                               <label class="badge badge-danger"> {{$rhsd->EtatSD}}</label>
+                                           @endif
+
+
+                                       </td>
+                                           @else
+                                               @endhasanyrole
+
+                                               <td>{{$rhsd->user->name}}</td>
+                                       </tr>
+                                   @empty
+
+                                   @endforelse
                                </tr>
 
 

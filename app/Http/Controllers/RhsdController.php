@@ -6,6 +6,7 @@ use App\Models\Axe;
 use App\Models\DP;
 use App\Models\Qualite;
 use App\Models\Rhsd;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -16,10 +17,26 @@ class RhsdController extends Controller
 
     public function index()
     {
+        $uss = User::where('email',Auth::user()->email)->where('id',Auth::id())->first();
+        $userRole = $uss->roles->pluck('name')->toArray();
+        //the role of user authentifié
+        $role_sys = in_array(ROLE,$userRole);
+        $role_v0 = in_array("v0",$userRole);
+        $role_v1 = in_array("v1",$userRole);
+            if($role_sys){
+                $rh =   Rhsd::select('id','DateSD','ObjectifSD','RealisationSD','EcartSD','EtatSD','RejetSD','qualite_id','domaine_id','axe_id','user_id');
+            }
+            if ($role_v0){
+                $rh =  Rhsd::select('id','DateSD','ObjectifSD','RealisationSD','EcartSD','EtatSD','RejetSD','qualite_id','domaine_id','axe_id','user_id')->where('EtatSD',0)->WhereIn('RejetSD',[0,1])->where('user_id',Auth::user()->id);
+            }
 
-        $rhsds = Rhsd::select('id','DateSD','ObjectifSD','RealisationSD','EcartSD','EtatSD','RejetSD','qualite_id','domaine_id','axe_id','user_id')
+        if ($role_v1){
+            $rh =  Rhsd::select('id','DateSD','ObjectifSD','RealisationSD','EcartSD','EtatSD','RejetSD','qualite_id','domaine_id','axe_id','user_id')->where('EtatSD',1)->WhereIn('RejetSD',[0,1]);
+        }
 
-            ->with(
+
+
+         $rhsds = $rh->with(
                 ['qualite' => function($q){
                     $q->select('id','qualite_'.LaravelLocalization::getCurrentLocale().' as qualite');
                 }])->with(
@@ -33,8 +50,8 @@ class RhsdController extends Controller
                     $qqqq->select('id','name');
                 }])
                ->get();
-        return  $rhsds;
-        return view('rhsd.rhsd');
+
+        return view('rhsd.rhsd',compact('rhsds'));
     }
 
 

@@ -19,9 +19,7 @@ class UserController extends Controller
             $q->where('name','!=', ROLE );
         })->orderBy('id','ASC')->cursor();
 
-        $user =User::select('id','email')->where('email',Auth::user()->email)->first();
-         $userrole = $user->UserRoles->makeHidden(['pivot','created_at','updated_at']);
-         return  $userrole[0]->name;
+
 
 
         return view('users.index',compact('users'));
