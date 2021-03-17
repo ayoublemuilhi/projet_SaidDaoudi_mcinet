@@ -2,10 +2,13 @@
 return [
            ################################  index
 'add user' => 'Ajouter un utilisateur',
-'nom_user' => ' Nom utilisateur',
+'nom_user' => "Nom d'utilisateur",
 'action' => 'Action',
-'title edit' => 'editer',
-'title supprimer' => 'supprimer',
+'edit' => 'editer',
+    'supprimer' => 'supprimer',
+    'view' => 'afficher',
+    'desactiver' => 'Désactiver le compte',
+    'activer' => 'Activer le compte',
 'modal supprimer' => "Supprimer l'utilisateur",
 'modal validation supprision' => 'êtes-vous sûr du processus de suppression ?',
 'modal validation close' => 'Fermer',
@@ -15,10 +18,10 @@ return [
     'email' => 'Email',
     'password' => 'Mot de passe',
     'confirm_pass' => 'Confirmez le mot de passe',
-    'statut' => "Statut de l'utilisateur",
-    'active' => 'Activé',
-    'Pas active' => 'Pas activé',
-    'role utilisateur' => 'rôle utilisateur',
+    'statut' => "Statut du compte",
+    'active' => 'activé',
+    'Pas active' => 'désactivé',
+    'role utilisateur' => 'rôle',
 
     'btn_add_edit' => 'sauvegarder',
 'form.title' => "Veuillez saisir le nom d'utilisateur",
@@ -43,9 +46,9 @@ return [
     'utilisateur success in add' => "L' utilisateur a été ajouté avec succès",
     ################################   edit utilisateur
 
-    'edit utilisateur' => 'Editer  le  utilisateur',
-    'utilisateur success in edit' => 'Le utilisateur a été editer avec succès',
+    'edit utilisateur' => "Editer  l'utilisateur",
+    'utilisateur success in edit' => "L'utilisateur a été editer avec succès",
     ################################   supprimer utilisateur
-    'utilisateur success in supprimer' => 'Le utilisateur a été supprimé avec succès',
+    'utilisateur success in supprimer' => "L'utilisateur a été supprimé avec succès",
 
 ];

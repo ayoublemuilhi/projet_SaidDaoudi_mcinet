@@ -13,7 +13,7 @@
     <div class="breadcrumb-header justify-content-between">
         <div class="my-auto">
             <div class="d-flex">
-                <h4 class="content-title mb-0 my-auto">المستخدمين</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/
+                <h4 class="content-title mb-0 my-auto">@lang('sidebar.user')</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/
                  @lang('users.add user')</span>
             </div>
         </div>
@@ -85,10 +85,11 @@
 
                                             <div class="col-md-3">
 
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheck_{{$role->id}}" name="roles[]"  value="{{$role->name}}">
-                                                    <label class="custom-control-label" for="customCheck_{{$role->id}}">{{$role->name}}</label>
+                                                <div class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" id="customRadioInline_{{$role->id}}" name="roles" class="custom-control-input" value="{{$role->name}}">
+                                                    <label class="custom-control-label" for="customRadioInline_{{$role->id}}">{{$role->name}}</label>
                                                 </div>
+
 
 
 

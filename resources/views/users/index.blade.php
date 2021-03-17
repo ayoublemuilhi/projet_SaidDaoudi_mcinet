@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title') @lang('sidebar.liste secteur')   @endsection
+@section('title') @lang('sidebar.liste user')   @endsection
 @section('css')
     <!-- Internal Data table css -->
     <link href="{{URL::asset('assets/plugins/datatable/css/dataTables.bootstrap4.min.css')}}" rel="stylesheet" />
@@ -15,8 +15,8 @@
     <div class="breadcrumb-header justify-content-between">
         <div class="my-auto">
             <div class="d-flex">
-                <h4 class="content-title mb-0 my-auto">المستخدمين</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/ قائمة
-                المستخدمين</span>
+                <h4 class="content-title mb-0 my-auto">@lang('sidebar.user')</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/
+                @lang('sidebar.liste user')</span>
 
             </div>
         </div>
@@ -26,12 +26,6 @@
 
 @section('content')
 
-    @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
-
     <!-- row opened -->
     <div class="row row-sm">
         <div class="col-xl-12">
@@ -39,7 +33,7 @@
                 <div class="card-header pb-0">
                     <div class="col-sm-1 col-md-2">
 
-                            <a class="btn btn-primary btn-sm" href="{{ route('users.create') }}">اضافة مستخدم</a>
+                            <a class="btn btn-primary btn-sm" href="{{ route('users.create') }}">@lang('users.add user')</a>
 
                     </div>
                 </div>
@@ -50,17 +44,17 @@
                             <thead>
                                 <tr>
                                     <th class="wd-10p border-bottom-0">#</th>
-                                    <th class="wd-15p border-bottom-0">اسم المستخدم</th>
-                                    <th class="wd-20p border-bottom-0">البريد الالكتروني</th>
-                                    <th class="wd-15p border-bottom-0">حالة المستخدم</th>
-                                    <th class="wd-15p border-bottom-0">نوع المستخدم</th>
-                                    <th class="wd-10p border-bottom-0">العمليات</th>
+                                    <th class="wd-15p border-bottom-0">@lang('users.nom_user')</th>
+                                    <th class="wd-20p border-bottom-0">@lang('users.email')</th>
+                                    <th class="wd-15p border-bottom-0">@lang('users.statut')</th>
+                                    <th class="wd-15p border-bottom-0">@lang('users.role utilisateur')</th>
+                                    <th class="wd-10p border-bottom-0">@lang('users.action')</th>
                                 </tr>
                             </thead>
                             <tbody>
 
                             @foreach ($users as $user)
-                                <tr>
+                                <tr @if($user->status == 0) style="background-color: #f5b4b4 !important;}" @endif>
 
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$user->name }}</td>
@@ -68,13 +62,13 @@
                                     <td>
                                         @if ($user->status == 1)
                                             <span class="label text-success d-flex">
-                                                <div class="bg-success text-center"></div> Activé
-
+                                               <label class="badge badge-success">@lang('users.active')</label>
                                             </span>
 
                                         @else
                                             <span class="label text-danger d-flex">
-                                                <div class="dot-label bg-danger ml-2"></div>  Pas activé
+                                                <label class="badge badge-danger">@lang('users.Pas active')</label>
+
                                             </span>
                                         @endif
                                     </td>
@@ -91,31 +85,36 @@
                                         <div class="dropdown">
                                             <button aria-expanded="false" aria-haspopup="true"
                                                     class="btn ripple btn-primary btn-sm" data-toggle="dropdown"
-                                                    type="button">العمليات<i class="fas fa-caret-down"></i></button>
+                                                    type="button">@lang('users.action')<i class="fas fa-caret-down"></i></button>
                                             <div class="dropdown-menu">
 
                                                 <a class="dropdown-item"
-                                                   href="{{route('users.edit',$user->id)}}"><i class=" fas fa-edit" style="color: #239a8a"></i>&nbsp;&nbsp;تعديل
+                                                   href="{{route('users.edit',$user->id)}}"><i class=" fas fa-edit" style="color: #239a8a"></i>&nbsp;&nbsp;@lang('users.edit')
                                                 </a>
                                                 <a class="dropdown-item"  href="javascript:void(0)"  data-id="{{ $user->id }}" data-name="{{ $user->name }}" data-email="{{ $user->email }}"
                                                    data-toggle="modal" data-target="#modalUserShow"><i
-                                                        class="fas fa-eye" style="color: #252e75"></i>&nbsp;&nbsp;عرض
+                                                        class="fas fa-eye" style="color: #252e75"></i>&nbsp;&nbsp;@lang('users.view')
                                                 </a>
 
                                                 <a class="dropdown-item"  href="javascript:void(0)" data-id="{{ $user->id }}" data-name="{{ $user->name }}" data-email="{{ $user->email }}"
                                                    data-toggle="modal" data-target="#modalUserSuP"><i
-                                                        class="text-danger fas fa-trash-alt"></i>&nbsp;&nbsp;حذف
+                                                        class="text-danger fas fa-trash-alt"></i>&nbsp;&nbsp;@lang('users.supprimer')
                                                 </a>
 
-                                                <a class="dropdown-item"  href="javascript:void(0)"  data-id="{{ $user->id }}"
-                                                   data-toggle="modal" data-target="#modalUserDes"><i
-                                                        class="fas fa-lock" style="color: #600a27" ></i>&nbsp;&nbsp;تعطيل الحساب
-                                                </a>
+                                                @if($user->status == 1)
+                                                    <a class="dropdown-item"  href="javascript:void(0)"  data-id="{{ $user->id }}"
+                                                       data-toggle="modal" data-target="#modalUserDes"><i
+                                                            class="fas fa-lock" style="color: #600a27" ></i>&nbsp;&nbsp;@lang('users.desactiver')
+                                                    </a>
+                                                @else
 
-                                                <a class="dropdown-item"  href="javascript:void(0)"  data-id="{{ $user->id }}"
-                                                   data-toggle="modal" data-target="#modalUserAct"><i
-                                                        class="fas fa-lock-open" style="color: #077a17" ></i>&nbsp;&nbsp;تفعيل  الحساب
-                                                </a>
+
+                                                    <a class="dropdown-item"  href="javascript:void(0)"  data-id="{{ $user->id }}"
+                                                       data-toggle="modal" data-target="#modalUserAct"><i
+                                                            class="fas fa-lock-open" style="color: #077a17" ></i>&nbsp;&nbsp;&nbsp;@lang('users.activer')
+                                                    </a>
+
+                                                @endif
 
 
                                             </div>
@@ -139,14 +138,14 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content modal-content-demo">
                     <div class="modal-header">
-                        <h6 class="modal-title">حذف المستخدم</h6><button aria-label="Close" class="close"
+                        <h6 class="modal-title"> @lang('users.modal supprimer')</h6><button aria-label="Close" class="close"
                                                                          data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                     </div>
                         <form action="{{ url('users/destroy') }}" method="post">
                            @method('DELETE')
                            @csrf
                             <div class="modal-body">
-                                <p>هل انت متاكد من عملية الحذف ؟</p><br>
+                                <p>@lang('users.modal validation supprision')</p><br>
                                 <input type="hidden" name="user_id" id="user_id" value="">
 
                                 <div style="text-align: center;">
@@ -155,8 +154,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
-                                <button type="submit" class="btn btn-danger">تاكيد</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">@lang('users.modal validation close')</button>
+                                <button type="submit" class="btn btn-danger">@lang('users.modal validation confirm')</button>
                             </div>
                         </form>
                 </div>

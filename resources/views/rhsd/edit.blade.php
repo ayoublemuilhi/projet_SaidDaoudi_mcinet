@@ -11,7 +11,7 @@
     @endif
 
 @section('title')
-    @lang('rhsd.add rhsd')
+    @lang('rhsd.edit rhsd')
 @stop
 @endsection
 @section('page-header')
@@ -20,7 +20,7 @@
         <div class="my-auto">
             <div class="d-flex">
                 <h4 class="content-title mb-0 my-auto">@lang('sidebar.rhsd')</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/
-                    @lang('rhsd.add rhsd') </span>
+                    @lang('rhsd.edit rhsd') </span>
             </div>
         </div>
     </div>
@@ -36,13 +36,13 @@
     <div class="row">
 
         <div class="col-lg-12 col-md-12">
+
             <div class="card">
                 @include('layouts.errors_success')
                 <div class="card-body">
-                    <form action="{{ route('rhsd.store') }}" method="post" enctype="multipart/form-data"
-                          autocomplete="off">
+                    <form action="{{ route('rhsd.update',$rhsd->id) }}" method="post" autocomplete="off">
                         @csrf
-
+@method('PUT')
                         <div class="row">
 
                             <div class="col-md-6">
@@ -52,8 +52,9 @@
                                         <option value=""    selected disabled> @lang('rhsd.choi_qualite')</option>
                                         @if(isset($qualites) && $qualites->count() > 0)
                                             @foreach($qualites as $qualite)
-                                                <option value="{{$qualite->id}}" {{ (collect(old('qualite'))->contains($qualite->id)) ? 'selected':'' }}>{{$qualite->qualite}}</option>
+                                                <option @if($qualite->id === $rhsd->qualite_id) selected="selected" @endif value="{{$qualite->id}}">{{$qualite->qualite}}</option>
                                             @endforeach
+
                                         @endif
 
 
@@ -69,7 +70,7 @@
                                         <option value=""   selected disabled>@lang('rhsd.choi_domaine')</option>
                                         @if(isset($domaines) && $domaines->count() > 0)
                                             @foreach($domaines as $domaine)
-                                                <option value="{{$domaine->id}}" {{ (collect(old('domaine'))->contains($domaine->id)) ? 'selected':'' }}>{{$domaine->domaine}}</option>
+                                                <option @if($domaine->id === $rhsd->domaine_id) selected="selected" @endif value="{{$domaine->id}}">{{$domaine->domaine}}</option>
                                             @endforeach
                                         @endif
                                     </select>
@@ -85,7 +86,7 @@
                                         <option value=""   selected disabled>@lang('rhsd.choi_axe')</option>
                                         @if(isset($axes) && $axes->count() > 0)
                                             @foreach($axes as $axe)
-                                                <option value="{{$axe->id}}" {{ (collect(old('axe'))->contains($axe->id)) ? 'selected':'' }}>{{$axe->axes}}</option>
+                                                <option @if($axe->id === $rhsd->axe_id) selected="selected" @endif value="{{$axe->id}}">{{$axe->axe}}</option>
                                             @endforeach
                                         @endif
 
@@ -98,7 +99,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>@lang('rhsd.date_creation')</label>
-                                    <input class="form-control fc-datepicker" name="date_creation" id="date_creation" placeholder="YYYY-MM-DD" value="{{date('Y-m-d')}}"
+                                    <input class="form-control fc-datepicker" name="date_creation" id="date_creation" placeholder="YYYY-MM-DD" value="{{$rhsd->DateSD}}"
                                            type="text" required>
                                 </div>
 
@@ -107,14 +108,14 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="inputName" class="control-label">@lang('rhsd.nom_objectif')</label>
-                                    <input type="text" class="form-control" id="amount1" name="objectif" value="{{old('objectif')}}">
+                                    <input type="text" class="form-control" id="amount1" name="objectif" value="{{$rhsd->ObjectifSD}}">
                                 </div>
 
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="inputName" class="control-label">@lang('rhsd.nom_realisation')</label>
-                                    <input type="text" class="form-control"  name="realisation" id="amount2" value="{{old('realisation')}}">
+                                    <input type="text" class="form-control"  name="realisation" id="amount2" value="{{$rhsd->RealisationSD}}">
                                 </div>
 
                             </div>
@@ -123,7 +124,7 @@
                                 <div class="form-group">
                                     <label for="inputName" class="control-label">@lang('rhsd.nom_ecart')</label>
 
-                                    <input type="text" class="form-control"  name="ecart"  readonly id="ecart" value="{{old('ecart')}}">
+                                    <input type="text" class="form-control"  name="ecart"  readonly id="ecart" value="{{$rhsd->EcartSD}}">
                                 </div>
 
                             </div>

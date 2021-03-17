@@ -15,9 +15,9 @@ class UserController extends Controller
     public function index()
     {
 
-        $users = User::whereHas('roles' , function($q){
+        $users = User::with(['roles' => function($q){
             $q->where('name','!=', ROLE );
-        })->orderBy('id','ASC')->cursor();
+        }])->orderBy('id','ASC')->cursor();
 
 
 

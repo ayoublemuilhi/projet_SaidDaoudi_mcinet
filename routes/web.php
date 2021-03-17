@@ -71,7 +71,7 @@ Route::group(['middleware' => 'auth'],function (){
 ################## Rhsd
         Route::resource('rhsd','RhsdController');
 
-
+      Route::post('update_all','RhsdController@updateAll')->name('update_all');
 
 
 

@@ -47,7 +47,13 @@ return [
     'axes' => 'Axes',
     'liste axes' => 'Liste des Axes',
 
+    ########################### Rhsd
+    'rhsd' => 'Ressource Humaine',
+    'liste rhsd' => 'Liste des Ressources Humaines',
 
+########################### Users
+    'user' => 'Utilisateurs',
+    'liste user' => "Liste D'Utilisateurs",
 
     ############################################# for return back button
 

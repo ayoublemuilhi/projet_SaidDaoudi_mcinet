@@ -42,5 +42,49 @@
                         });
                     });
                 </script>
+
+                <script>
+                    // for rhsd [envoyer]
+                    function CheckAll(className, elem) {
+                        var elements = document.getElementsByClassName(className);
+                        var l = elements.length;
+                        if (elem.checked) {
+                            for (var i = 0; i < l; i++) {
+                                elements[i].checked = true;
+                            }
+                        } else {
+                            for (var i = 0; i < l; i++) {
+                                elements[i].checked = false;
+                            }
+                        }
+                    }
+                </script>
+
+
+                <script>
+                    // Restricts input for the given textbox to the given inputFilter.
+                    function setInputFilter(textbox, inputFilter) {
+                        ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function(event) {
+                            textbox.addEventListener(event, function() {
+                                if (inputFilter(this.value)) {
+                                    this.oldValue = this.value;
+                                    this.oldSelectionStart = this.selectionStart;
+                                    this.oldSelectionEnd = this.selectionEnd;
+                                } else if (this.hasOwnProperty("oldValue")) {
+                                    this.value = this.oldValue;
+                                    this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+                                } else {
+                                    this.value = "";
+                                }
+                            });
+                        });
+                    }
+
+                    setInputFilter(document.getElementById("amount1"), function(value) {
+                        return /^\d*$/.test(value); });
+
+                    setInputFilter(document.getElementById("amount2"), function(value) {
+                        return /^\d*$/.test(value); });
+                </script>
 	</body>
 </html>
