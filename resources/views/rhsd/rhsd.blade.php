@@ -104,15 +104,17 @@
                                                    @if($rhsd->Description != "")
                                                        {{\Illuminate\Support\Str::limit($rhsd->Description,50,'..')}}
                                                    @else
+                                                       <span><a href="" style="color: #47484a;margin-left: 32%;"><i class="fas fa-plus-circle" ></i></a></span>
 
                                                    @endif
 
                                               </td>
 
-                                       <td>
+                                       <td style="text-align: center">
                                            @if($rhsd->Motif != "")
                                                {{\Illuminate\Support\Str::limit($rhsd->Motif,50,'..')}}
                                            @else
+                                               <span><a href="" style="color: #47484a;margin-left: 26%;"><i class="fas fa-plus-circle" ></i></a></span>
 
                                            @endif
 
@@ -129,6 +131,19 @@
                                                               href="{{route('rhsd.edit',$rhsd->id)}}"><i class=" fas fa-edit" style="color: #239a8a"></i>&nbsp;&nbsp;@lang('rhsd.edit')
                                                            </a>
 
+                                                           @if($rhsd->RejetSD == 0)
+                                                               @hasanyrole('sys|v1|v2|v3|v4')
+                                                           <a class="dropdown-item"  href="javascript:void(0)" data-id="{{ $rhsd->id }}"
+                                                              data-toggle="modal" data-target="#modalRhsdRejet">
+                                                               <i class="fas fa-vote-yea"></i>&nbsp;&nbsp;@lang('rhsd.rejet')
+                                                           </a>
+                                                               @endhasanyrole
+                                                           @else
+                                                               <a class="dropdown-item"  href="javascript:void(0)" data-id="{{ $rhsd->id }}"
+                                                                  data-toggle="modal" data-target="#modalRhsdRejet">
+                                                                   <i class="fas fa-vote-yea"></i>        &nbsp;&nbsp;@lang('rhsd.cancel rejet')
+                                                               </a>
+                                                           @endif
 
                                                            <a class="dropdown-item"  href="javascript:void(0)" data-id="{{ $rhsd->id }}"
                                                               data-toggle="modal" data-target="#modalRhsdSUP"><i
@@ -222,6 +237,40 @@
             </div>
         </div>
     </div>
+
+    <!-- rejet -->
+
+    <div class="modal fade" id="modalRhsdRejet" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 style="font-family: 'Cairo', sans-serif;" class="modal-title" id="exampleModalLabel">
+                        {{ trans('Envoyer') }}
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="{{route('update_rejet')}}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <input type="hidden" name="re_id" id="re_id" value="">
+                        <div style="text-align: center;">
+                            <img width="30%" height="100px" src="{{asset('/img/resource_humaine_send.svg')}}">
+
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">@lang('regions.modal validation close')</button>
+                        <button type="submit" class="btn btn-danger">@lang('regions.modal validation confirm')</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('js')
     <!-- Internal Data tables -->
@@ -250,6 +299,16 @@
             var id = button.data('id')
             var modal = $(this)
             modal.find('.modal-body #rhsd_id').val(id);
+
+        })
+    </script>
+
+    <script>
+        $('#modalRhsdRejet').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget)
+            var id = button.data('id')
+            var modal = $(this)
+            modal.find('.modal-body #re_id').val(id);
 
         })
     </script>

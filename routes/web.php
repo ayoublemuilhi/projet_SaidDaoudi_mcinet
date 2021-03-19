@@ -34,6 +34,7 @@ Route::group(['middleware' => 'auth'],function (){
 
 ################## Dashboard
         Route::resource('/dashboard', 'HomeController');
+        Route::post('/logout', 'HomeController@logout')->name('dashboard.logout');
 
 ################## Secteurs
         Route::resource('secteurs','SecteurController');
@@ -71,7 +72,8 @@ Route::group(['middleware' => 'auth'],function (){
 ################## Rhsd
         Route::resource('rhsd','RhsdController');
 
-      Route::post('update_all','RhsdController@updateAll')->name('update_all');
+        Route::post('update_all','RhsdController@updateAll')->name('update_all');
+        Route::post('update_rejet','RhsdController@updateRejet')->name('update_rejet');
 
 
 

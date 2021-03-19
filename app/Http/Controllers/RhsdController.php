@@ -24,15 +24,27 @@ class RhsdController extends Controller
         $role_sys = in_array(ROLE,$userRole);
         $role_v0 = in_array("v0",$userRole);
         $role_v1 = in_array("v1",$userRole);
+        $role_v2 = in_array("v2",$userRole);
+        $role_v3 = in_array("v3",$userRole);
+        $role_v4 = in_array("v4",$userRole);
             if($role_sys){
-                $rh =   Rhsd::select('id','DateSD','ObjectifSD','RealisationSD','EcartSD','EtatSD','RejetSD','qualite_id','domaine_id','axe_id','user_id');
+                $rh =   Rhsd::select('id','DateSD','ObjectifSD','RealisationSD','EcartSD','EtatSD','RejetSD','qualite_id','domaine_id','axe_id','user_id','Description','Motif');
             }
             if ($role_v0){
                 $rh =  Rhsd::select('id','DateSD','ObjectifSD','RealisationSD','EcartSD','EtatSD','RejetSD','qualite_id','domaine_id','axe_id','user_id')->where('EtatSD',0)->WhereIn('RejetSD',[0,1])->where('user_id',Auth::user()->id);
             }
 
         if ($role_v1){
-            $rh =  Rhsd::select('id','DateSD','ObjectifSD','RealisationSD','EcartSD','EtatSD','RejetSD','qualite_id','domaine_id','axe_id','user_id')->where('EtatSD',1)->WhereIn('RejetSD',[0,1]);
+            $rh =  Rhsd::select('id','DateSD','ObjectifSD','RealisationSD','EcartSD','EtatSD','RejetSD','qualite_id','domaine_id','axe_id','user_id')->where('EtatSD',1)->Where('RejetSD',0);
+        }
+        if ($role_v2){
+            $rh =  Rhsd::select('id','DateSD','ObjectifSD','RealisationSD','EcartSD','EtatSD','RejetSD','qualite_id','domaine_id','axe_id','user_id')->where('EtatSD',2)->Where('RejetSD',0);
+        }
+        if ($role_v3){
+            $rh =  Rhsd::select('id','DateSD','ObjectifSD','RealisationSD','EcartSD','EtatSD','RejetSD','qualite_id','domaine_id','axe_id','user_id')->where('EtatSD',3)->Where('RejetSD',0);
+        }
+        if ($role_v4){
+            $rh =  Rhsd::select('id','DateSD','ObjectifSD','RealisationSD','EcartSD','EtatSD','RejetSD','qualite_id','domaine_id','axe_id','user_id')->where('EtatSD',4)->Where('RejetSD',0);
         }
 
          $rhsds = $rh->with(
@@ -142,7 +154,7 @@ class RhsdController extends Controller
 
             ]);
 
-            Session::flash('success',__('rhsd.rhsd success in add'));
+            Session::flash('success',__('rhsd.rhsd success in edit'));
             return back();
 
         }
@@ -155,6 +167,9 @@ class RhsdController extends Controller
         //the role of user authentifié
         $role_v0 = in_array("v0",$userRole);
         $role_v1 = in_array("v1",$userRole);
+        $role_v2 = in_array("v2",$userRole);
+        $role_v3 = in_array("v3",$userRole);
+        $role_v4 = in_array("v4",$userRole);
 
         if ($role_v0){
 
@@ -166,25 +181,46 @@ class RhsdController extends Controller
         if ($role_v1){
             // rejet = 1 return to v0 (user) et les autres  go to  v2  sinon go to v2
 
-           $rhsds  = Rhsd::select('id','EtatSD','RejetSD','user_id')->where('EtatSD',1)->WhereIn('RejetSD',[0,1])->cursor();
-
-
+           $rhsds  = Rhsd::select('id','EtatSD','RejetSD','user_id')->where('EtatSD',1)->Where('RejetSD',0)->cursor();
            foreach ($rhsds as $rhsd){
-               if($rhsd->RejetSD == 1){
-                   Rhsd::where('EtatSD',1)->where('RejetSD',1)->where('user_id',$rhsd->user_id)->whereIn('id',$update_all_id)->update([
-                       'EtatSD' => 0
-                   ]);
-               }else if($rhsd->RejetSD == 0 && $rhsd->EtatSD == 1){
+              if($rhsd->RejetSD == 0 && $rhsd->EtatSD == 1){
                    // v2
                    Rhsd::where('EtatSD',1)->where('RejetSD',0)->where('user_id',$rhsd->user_id)->whereIn('id',$update_all_id)->update([
                        'EtatSD' => 2
                    ]);
 
                }
-
            }
+        }
 
+        if ($role_v2){
+            // rejet = 1 return to v0 (user) et les autres  go to  v2  sinon go to v2
 
+            $rhsds  = Rhsd::select('id','EtatSD','RejetSD','user_id')->where('EtatSD',2)->Where('RejetSD',0)->cursor();
+            foreach ($rhsds as $rhsd){
+                if($rhsd->RejetSD == 0 && $rhsd->EtatSD == 2){
+                    // v3
+                    Rhsd::where('EtatSD',2)->where('RejetSD',0)->where('user_id',$rhsd->user_id)->whereIn('id',$update_all_id)->update([
+                        'EtatSD' => 3
+                    ]);
+
+                }
+            }
+        }
+
+        if ($role_v3){
+            // rejet = 1 return to v0 (user) et les autres  go to  v2  sinon go to v2
+
+            $rhsds  = Rhsd::select('id','EtatSD','RejetSD','user_id')->where('EtatSD',3)->Where('RejetSD',0)->cursor();
+            foreach ($rhsds as $rhsd){
+                if($rhsd->RejetSD == 0 && $rhsd->EtatSD == 3){
+                    // send to  v4
+                    Rhsd::where('EtatSD',3)->where('RejetSD',0)->where('user_id',$rhsd->user_id)->whereIn('id',$update_all_id)->update([
+                        'EtatSD' => 4
+                    ]);
+
+                }
+            }
         }
 
 
@@ -192,7 +228,16 @@ class RhsdController extends Controller
 
 
     }
+public function updateRejet(Request  $request){
+       $rhsd = Rhsd::find($request->re_id);
+       if(!$rhsd){ back();}
+       $rejet = $rhsd->RejetSD;
 
+     $rejet == 0 ? $rhsd->update(['RejetSD' => 1,'EtatSD' => 0]) :  $rhsd->update(['RejetSD' => 0]);
+
+    return back();
+
+}
 
     public function destroy($id)
     {

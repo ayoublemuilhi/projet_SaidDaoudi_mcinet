@@ -21,6 +21,7 @@ return [
 'edit' => 'تعديل',
 'supprimer' => 'حدف',
 
+    'cancel rejet' => 'إلغاء الرفض',
 'modal supprimer' => "حذف المورد",
 'modal validation supprision' => 'هل أنت متأكد من عملية الإزالة ?',
 'modal validation close' => 'الغاء',

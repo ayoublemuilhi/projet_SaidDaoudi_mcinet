@@ -80,20 +80,17 @@
                                 <div class="form-group">
                                     <label class="form-label">@lang('users.role utilisateur') : </label>
                                     <div class="row">
-                                        <div class="col-md-3"></div>
-                                        @foreach($roles as $role)
 
+                                        @foreach($roles as $role)
+                                            <div class="col-md-3"></div>
                                             <div class="col-md-3">
 
                                                 <div class="custom-control custom-radio custom-control-inline">
                                                     <input type="radio" id="customRadioInline_{{$role->id}}" name="roles" class="custom-control-input" value="{{$role->name}}">
                                                     <label class="custom-control-label" for="customRadioInline_{{$role->id}}">{{$role->name}}</label>
                                                 </div>
-
-
-
-
                                             </div>
+
                                             <br>
 
 

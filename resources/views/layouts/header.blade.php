@@ -251,7 +251,7 @@
                         <a class="dropdown-item" href=""
                            onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i
                                 class="bx bx-log-out"></i> @lang('header.logout')</a>
-                        <form id="logout-form" action="" method="POST" style="display: none;">
+                        <form id="logout-form" action="{{route('dashboard.logout')}}" method="POST" style="display: none;">
                             @csrf
                         </form>
                     </div>

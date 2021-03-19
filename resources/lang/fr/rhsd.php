@@ -20,6 +20,7 @@ return [
 'action' => 'Action',
 'edit' => 'editer',
 'supprimer' => 'supprimer',
+'cancel rejet' => 'annuler le rejet',
 
 'modal supprimer' => "Supprimer la Ressource",
 'modal validation supprision' => 'êtes-vous sûr du processus de suppression ?',
