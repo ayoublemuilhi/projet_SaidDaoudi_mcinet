@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Rhsd\RhsdRejetRequest;
 use App\Http\Requests\Rhsd\RhsdRequest;
 use App\Models\Axe;
 use App\Models\DP;
@@ -31,20 +32,20 @@ class RhsdController extends Controller
                 $rh =   Rhsd::select('id','DateSD','ObjectifSD','RealisationSD','EcartSD','EtatSD','RejetSD','qualite_id','domaine_id','axe_id','user_id','Description','Motif');
             }
             if ($role_v0){
-                $rh =  Rhsd::select('id','DateSD','ObjectifSD','RealisationSD','EcartSD','EtatSD','RejetSD','qualite_id','domaine_id','axe_id','user_id')->where('EtatSD',0)->WhereIn('RejetSD',[0,1])->where('user_id',Auth::user()->id);
+                $rh =  Rhsd::select('id','DateSD','ObjectifSD','RealisationSD','EcartSD','EtatSD','RejetSD','qualite_id','domaine_id','axe_id','user_id','Description','Motif')->whereIn('EtatSD',[0,5])->WhereIn('RejetSD',[0,1])->where('user_id',Auth::user()->id);
             }
 
         if ($role_v1){
-            $rh =  Rhsd::select('id','DateSD','ObjectifSD','RealisationSD','EcartSD','EtatSD','RejetSD','qualite_id','domaine_id','axe_id','user_id')->where('EtatSD',1)->Where('RejetSD',0);
+            $rh =  Rhsd::select('id','DateSD','ObjectifSD','RealisationSD','EcartSD','EtatSD','RejetSD','qualite_id','domaine_id','axe_id','user_id','Description','Motif')->whereIn('EtatSD',[1,5])->Where('RejetSD',0);
         }
         if ($role_v2){
-            $rh =  Rhsd::select('id','DateSD','ObjectifSD','RealisationSD','EcartSD','EtatSD','RejetSD','qualite_id','domaine_id','axe_id','user_id')->where('EtatSD',2)->Where('RejetSD',0);
+            $rh =  Rhsd::select('id','DateSD','ObjectifSD','RealisationSD','EcartSD','EtatSD','RejetSD','qualite_id','domaine_id','axe_id','user_id','Description','Motif')->whereIn('EtatSD',[2,5])->Where('RejetSD',0);
         }
         if ($role_v3){
-            $rh =  Rhsd::select('id','DateSD','ObjectifSD','RealisationSD','EcartSD','EtatSD','RejetSD','qualite_id','domaine_id','axe_id','user_id')->where('EtatSD',3)->Where('RejetSD',0);
+            $rh =  Rhsd::select('id','DateSD','ObjectifSD','RealisationSD','EcartSD','EtatSD','RejetSD','qualite_id','domaine_id','axe_id','user_id','Description','Motif')->whereIn('EtatSD',[3,5])->Where('RejetSD',0);
         }
         if ($role_v4){
-            $rh =  Rhsd::select('id','DateSD','ObjectifSD','RealisationSD','EcartSD','EtatSD','RejetSD','qualite_id','domaine_id','axe_id','user_id')->where('EtatSD',4)->Where('RejetSD',0);
+            $rh =  Rhsd::select('id','DateSD','ObjectifSD','RealisationSD','EcartSD','EtatSD','RejetSD','qualite_id','domaine_id','axe_id','user_id','Description','Motif')->whereIn('EtatSD',[4,5])->Where('RejetSD',0);
         }
 
          $rhsds = $rh->with(
@@ -222,25 +223,73 @@ class RhsdController extends Controller
                 }
             }
         }
+        if ($role_v4){
+            // rejet = 1 return to v0 (user) et les autres  go to  v2  sinon go to v2
+
+            $rhsds  = Rhsd::select('id','EtatSD','RejetSD','user_id')->where('EtatSD',4)->Where('RejetSD',0)->cursor();
+            foreach ($rhsds as $rhsd){
+                if($rhsd->RejetSD == 0 && $rhsd->EtatSD == 4){
+                    // send to  v4
+                    Rhsd::where('EtatSD',4)->where('RejetSD',0)->where('user_id',$rhsd->user_id)->whereIn('id',$update_all_id)->update([
+                        'EtatSD' => 5
+                    ]);
+
+                }
+            }
+        }
 
 
       return redirect()->route('rhsd.index');
 
 
     }
+
+
 public function updateRejet(Request  $request){
-       $rhsd = Rhsd::find($request->re_id);
+
+      $rhsd = Rhsd::find($request->re_id);
+
        if(!$rhsd){ back();}
        $rejet = $rhsd->RejetSD;
 
-     $rejet == 0 ? $rhsd->update(['RejetSD' => 1,'EtatSD' => 0]) :  $rhsd->update(['RejetSD' => 0]);
+       if ($rejet == 1) {
+           $rhsd->update(['RejetSD' => 0, 'Motif' => null]);
+       }
+
+       //pour le rejet 1 = $rhsd->update(['RejetSD' => 1,'EtatSD' => 0])
 
     return back();
 
 }
 
-    public function destroy($id)
+
+public function  RejetWithMotif($id){
+        $rhsd = Rhsd::find($id);
+
+        if(!($rhsd) || $rhsd->RejetSD == 1 ){ return  back();}
+
+   return view('rhsd.update_rejet',compact('rhsd'));
+}
+
+public function RejetWithMotifStore(RhsdRejetRequest $request,$id){
+    $rhsd = Rhsd::find($id);
+    $rhsd->update([
+        'Motif' => $request->motif,
+        'RejetSD' => 1,
+        'EtatSD' => 0
+    ]);
+
+    Session::flash('success',__('rhsd.rhsd success in motif'));
+    return redirect("/rhsd");
+
+}
+
+    public function destroy(Request  $request)
     {
-        //
+        $rhsd = Rhsd::find($request->rhsd_id);
+        $rhsd->delete();
+
+        Session::flash('success',__('rhsd.rhsd success in supprimer'));
+        return redirect()->back();
     }
 }

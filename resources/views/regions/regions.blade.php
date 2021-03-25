@@ -53,6 +53,7 @@
                                         <td>{{$region->region}}</td>
                                         <td>
                                             <a class="btn btn-sm btn-info"  href="{{route('regions.edit',$region->id)}}" title="@lang('regions.title edit')"><i class="las la-pen"></i></a>
+
                                             <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale" data-id="{{ $region->id }}"
                                                data-region_name="{{ $region->region }}" data-toggle="modal" href="#supprimer_region"
                                                title="@lang('regions.title supprimer')"><i

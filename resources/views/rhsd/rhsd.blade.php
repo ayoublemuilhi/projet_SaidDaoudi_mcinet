@@ -36,24 +36,25 @@
                     </button>
                 </div>
 
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table id="example1"  class="table key-buttons text-md-nowrap">
-                                <thead>
-                                <tr>
-                                   <th><input type="checkbox" name="select_all" id="example-select-all" onclick="CheckAll('box1',this)"></th>
-                                    <th class="border-bottom-0">#</th>
-                                    <th class="border-bottom-0">@lang('rhsd.nom_qualite')</th>
-                                    <th class="border-bottom-0">@lang('rhsd.nom_domaine')</th>
-                                    <th class="border-bottom-0">@lang('rhsd.nom_axe')</th>
-                                    <th class="border-bottom-0">@lang('rhsd.date')</th>
-                                    <th class="border-bottom-0">@lang('rhsd.nom_objectif')</th>
-                                    <th class="border-bottom-0">@lang('rhsd.nom_realisation')</th>
-                                    <th class="border-bottom-0">@lang('rhsd.nom_ecart')</th>
-                                    <th class="border-bottom-0">@lang('rhsd.rejet')</th>
-                                    @hasanyrole('sys')
-                                        <th class="border-bottom-0">@lang('rhsd.etat')</th>
-                                    @else
+                @if($rhsds->count() > 0)
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="example1"  class="table key-buttons text-md-nowrap">
+                            <thead>
+                            <tr>
+                                <th><input type="checkbox" name="select_all" id="example-select-all" onclick="CheckAll('box1',this)"></th>
+                                <th class="border-bottom-0">#</th>
+                                <th class="border-bottom-0">@lang('rhsd.nom_qualite')</th>
+                                <th class="border-bottom-0">@lang('rhsd.nom_domaine')</th>
+                                <th class="border-bottom-0">@lang('rhsd.nom_axe')</th>
+                                <th class="border-bottom-0">@lang('rhsd.date')</th>
+                                <th class="border-bottom-0">@lang('rhsd.nom_objectif')</th>
+                                <th class="border-bottom-0">@lang('rhsd.nom_realisation')</th>
+                                <th class="border-bottom-0">@lang('rhsd.nom_ecart')</th>
+                                <th class="border-bottom-0">@lang('rhsd.rejet')</th>
+                                @hasanyrole('sys')
+                                <th class="border-bottom-0">@lang('rhsd.etat')</th>
+                                @else
                                     @endhasanyrole
 
                                     <th class="border-bottom-0">@lang('rhsd.user')</th>
@@ -62,111 +63,115 @@
                                     <th class="border-bottom-0">@lang('rhsd.action')</th>
 
 
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            @foreach($rhsds as $rhsd)
+                                <tr @if($rhsd->RejetSD == 1) style="background-color: #f5b4b4 !important;}" @endif  @if($rhsd->EtatSD == 5) style="background-color: #51b53f  !important;}" @endif>
+                                    <td><input type="checkbox" value="{{$rhsd->id}}" class="box1" ></td>
+                                    <td>{{$loop->iteration}}</td>
+                                    <td>{{$rhsd->qualite->qualite}}</td>
+                                    <td>{{$rhsd->dpci->domaine}}</td>
+                                    <td>{{$rhsd->axe->axe}}</td>
+                                    <td>{{$rhsd->DateSD}}</td>
+                                    <td>{{$rhsd->ObjectifSD}}</td>
+                                    <td>{{$rhsd->RealisationSD}}</td>
+                                    <td>{{$rhsd->EcartSD}}</td>
+
+                                    <td>
+                                        @if($rhsd->RejetSD == 0)
+                                            <label class="badge badge-success">@lang('rhsd.non')</label>
+                                        @else
+                                            <label class="badge badge-danger">@lang('rhsd.oui')</label>
+                                        @endif
+
+                                    </td>
+                                    @hasanyrole('sys')
+                                    <td>
+                                        @if($rhsd->EtatSD == 0)
+                                            <label class="badge badge-success">{{ $rhsd->EtatSD }}</label>
+                                        @else
+                                            <label class="badge badge-danger"> {{$rhsd->EtatSD}}</label>
+                                        @endif
+
+
+                                    </td>
+                                    @else
+                                        @endhasanyrole
+
+                                        <td>{{$rhsd->user->name}}</td>
+                                        <td>
+                                            @if($rhsd->Description != "")
+                                                {{\Illuminate\Support\Str::limit($rhsd->Description,30,'..')}}
+                                            @else
+                                                <span><a href="" style="color: #47484a;margin-left: 32%;"><i class="fas fa-plus-circle" ></i></a></span>
+
+                                            @endif
+
+                                        </td>
+
+                                        <td style="text-align: center">
+                                            @if($rhsd->Motif != "")
+                                                {{\Illuminate\Support\Str::limit($rhsd->Motif,30,'..')}}
+                                            @else
+
+                                            @endif
+
+                                        </td>
+
+                                        <td>
+                                            @if($rhsd->EtatSD != 5)
+                                            <div class="dropdown">
+                                                <button aria-expanded="false" aria-haspopup="true"
+                                                        class="btn ripple btn-primary btn-sm" data-toggle="dropdown"
+                                                        type="button">@lang('rhsd.action')<i class="fas fa-caret-down"></i></button>
+                                                <div class="dropdown-menu">
+
+                                                    <a class="dropdown-item"
+                                                       href="{{route('rhsd.edit',$rhsd->id)}}"><i class=" fas fa-edit" style="color: #239a8a"></i>&nbsp;&nbsp;@lang('rhsd.edit')
+                                                    </a>
+
+                                                    @if($rhsd->RejetSD == 0)
+                                                        @hasanyrole('sys|v1|v2|v3|v4')
+                                                        <a class="dropdown-item"  href="{{route('Rejet',$rhsd->id)}}">
+                                                            <i class="fas fa-vote-yea"></i>&nbsp;&nbsp;@lang('rhsd.rejet')
+                                                        </a>
+                                                        @endhasanyrole
+                                                    @else
+                                                        <a class="dropdown-item"  href="javascript:void(0)" data-id="{{ $rhsd->id }}"
+                                                           data-toggle="modal" data-target="#modalRhsdRejet">
+                                                            <i class="fas fa-vote-yea"></i>        &nbsp;&nbsp;@lang('rhsd.cancel rejet')
+                                                        </a>
+                                                    @endif
+
+                                                    <a class="dropdown-item"  href="javascript:void(0)" data-id="{{ $rhsd->id }}"
+                                                       data-toggle="modal" data-target="#modalRhsdSUP"><i
+                                                            class="text-danger fas fa-trash-alt"></i>&nbsp;&nbsp;@lang('rhsd.supprimer')
+                                                    </a>
+
+                                                </div>
+                                            </div>
+                                            @else
+                                                <span class="badge badge-info" style="background-color: #303e44">publier</span>
+                                            @endif
+                                        </td>
+
+
+                                        @endforeach
                                 </tr>
-                                </thead>
-                                <tbody>
-
-                                   @forelse($rhsds as $rhsd)
-                                       <tr @if($rhsd->RejetSD == 1) style="background-color: #f5b4b4 !important;}" @endif>
-                                           <td><input type="checkbox" value="{{$rhsd->id}}" class="box1" ></td>
-                                       <td>{{$loop->iteration}}</td>
-                                       <td>{{$rhsd->qualite->qualite}}</td>
-                                       <td>{{$rhsd->dpci->domaine}}</td>
-                                       <td>{{$rhsd->axe->axe}}</td>
-                                       <td>{{$rhsd->DateSD}}</td>
-                                       <td>{{$rhsd->ObjectifSD}}</td>
-                                       <td>{{$rhsd->RealisationSD}}</td>
-                                       <td>{{$rhsd->EcartSD}}</td>
-
-                                       <td>
-                                           @if($rhsd->RejetSD == 0)
-                                               <label class="badge badge-success">@lang('rhsd.non')</label>
-                                           @else
-                                               <label class="badge badge-danger">@lang('rhsd.oui')</label>
-                                           @endif
-
-                                       </td>
-                                           @hasanyrole('sys')
-                                       <td>
-                                           @if($rhsd->EtatSD == 0)
-                                               <label class="badge badge-success">{{ $rhsd->EtatSD }}</label>
-                                           @else
-                                               <label class="badge badge-danger"> {{$rhsd->EtatSD}}</label>
-                                           @endif
-
-
-                                       </td>
-                                           @else
-                                               @endhasanyrole
-
-                                       <td>{{$rhsd->user->name}}</td>
-                                               <td>
-                                                   @if($rhsd->Description != "")
-                                                       {{\Illuminate\Support\Str::limit($rhsd->Description,50,'..')}}
-                                                   @else
-                                                       <span><a href="" style="color: #47484a;margin-left: 32%;"><i class="fas fa-plus-circle" ></i></a></span>
-
-                                                   @endif
-
-                                              </td>
-
-                                       <td style="text-align: center">
-                                           @if($rhsd->Motif != "")
-                                               {{\Illuminate\Support\Str::limit($rhsd->Motif,50,'..')}}
-                                           @else
-                                               <span><a href="" style="color: #47484a;margin-left: 26%;"><i class="fas fa-plus-circle" ></i></a></span>
-
-                                           @endif
-
-                                       </td>
-
-                                               <td>
-                                                   <div class="dropdown">
-                                                       <button aria-expanded="false" aria-haspopup="true"
-                                                               class="btn ripple btn-primary btn-sm" data-toggle="dropdown"
-                                                               type="button">@lang('rhsd.action')<i class="fas fa-caret-down"></i></button>
-                                                       <div class="dropdown-menu">
-
-                                                           <a class="dropdown-item"
-                                                              href="{{route('rhsd.edit',$rhsd->id)}}"><i class=" fas fa-edit" style="color: #239a8a"></i>&nbsp;&nbsp;@lang('rhsd.edit')
-                                                           </a>
-
-                                                           @if($rhsd->RejetSD == 0)
-                                                               @hasanyrole('sys|v1|v2|v3|v4')
-                                                           <a class="dropdown-item"  href="javascript:void(0)" data-id="{{ $rhsd->id }}"
-                                                              data-toggle="modal" data-target="#modalRhsdRejet">
-                                                               <i class="fas fa-vote-yea"></i>&nbsp;&nbsp;@lang('rhsd.rejet')
-                                                           </a>
-                                                               @endhasanyrole
-                                                           @else
-                                                               <a class="dropdown-item"  href="javascript:void(0)" data-id="{{ $rhsd->id }}"
-                                                                  data-toggle="modal" data-target="#modalRhsdRejet">
-                                                                   <i class="fas fa-vote-yea"></i>        &nbsp;&nbsp;@lang('rhsd.cancel rejet')
-                                                               </a>
-                                                           @endif
-
-                                                           <a class="dropdown-item"  href="javascript:void(0)" data-id="{{ $rhsd->id }}"
-                                                              data-toggle="modal" data-target="#modalRhsdSUP"><i
-                                                                   class="text-danger fas fa-trash-alt"></i>&nbsp;&nbsp;@lang('rhsd.supprimer')
-                                                           </a>
-
-                                                       </div>
-                                                   </div>
-                                               </td>
 
 
 
-                                   @empty
-
-                                   @endforelse
-                               </tr>
-
-
-
-                                </tbody>
-                            </table>
-                        </div>
+                            </tbody>
+                        </table>
                     </div>
+                </div>
+                @else
+                    <div>
+                        <img width="100%" height="300px" src="{{asset('assets/img/svgicons/no-data.svg')}}">
+                    </div>
+                @endif
 
 
             </div>
@@ -180,7 +185,7 @@
             <div class="modal-content modal-content-demo">
                 <div class="modal-header">
                     <h6 class="modal-title">@lang('rhsd.modal supprimer')</h6><button aria-label="Close" class="close" data-dismiss="modal"
-                                                                  type="button"><span aria-hidden="true">&times;</span></button>
+                                                                                      type="button"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <form action="rhsd/destroy" method="post">
                     @method('DELETE')
@@ -212,7 +217,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 style="font-family: 'Cairo', sans-serif;" class="modal-title" id="exampleModalLabel">
-                        {{ trans('Envoyer') }}
+                        {{ trans('rhsd.envoyer') }}
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -222,7 +227,7 @@
                 <form action="{{route('update_all')}}" method="POST">
                     @csrf
                     <div class="modal-body">
-                         <input type="hidden" name="update_all_id" id="update_all_id" value="">
+                        <input type="hidden" name="update_all_id" id="update_all_id" value="">
                         <div style="text-align: center;">
                             <img width="30%" height="100px" src="{{asset('/img/resource_humaine_send.svg')}}">
 
@@ -246,14 +251,14 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 style="font-family: 'Cairo', sans-serif;" class="modal-title" id="exampleModalLabel">
-                        {{ trans('Envoyer') }}
+                        {{ trans('rhsd.envoyer') }}
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
 
-                <form action="{{route('update_rejet')}}" method="POST">
+                <form action="{{route('updateCancRej')}}" method="POST">
                     @csrf
                     <div class="modal-body">
                         <input type="hidden" name="re_id" id="re_id" value="">
@@ -299,7 +304,6 @@
             var id = button.data('id')
             var modal = $(this)
             modal.find('.modal-body #rhsd_id').val(id);
-
         })
     </script>
 
@@ -309,7 +313,6 @@
             var id = button.data('id')
             var modal = $(this)
             modal.find('.modal-body #re_id').val(id);
-
         })
     </script>
     <script type="text/javascript">
@@ -323,7 +326,6 @@
                     $('#update_all').modal('show')
                     $('input[id="update_all_id"]').val(selected);
                 }else{
-
                 }
             });
         });

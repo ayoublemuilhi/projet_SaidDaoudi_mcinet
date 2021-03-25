@@ -39,6 +39,7 @@ class UserController extends Controller
         $data = $request->validated();
 
         $data['password'] = Hash::make($data['password']);
+        $data['image'] = 'default.png';
         $user = User::create($data);
 
         $user->assignRole($request->input('roles'));

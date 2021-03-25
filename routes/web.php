@@ -73,7 +73,10 @@ Route::group(['middleware' => 'auth'],function (){
         Route::resource('rhsd','RhsdController');
 
         Route::post('update_all','RhsdController@updateAll')->name('update_all');
-        Route::post('update_rejet','RhsdController@updateRejet')->name('update_rejet');
+        Route::post('/updateCancRej','RhsdController@updateRejet')->name('updateCancRej');//anuller rejet
+        Route::get('/rejet/{rejet_id}','RhsdController@RejetWithMotif')->name('Rejet');
+        Route::post('/rejetconfirm/{rejet_id}','RhsdController@RejetWithMotifStore')->name('RejetStore');
+
 
 
 

@@ -56,8 +56,12 @@ return [
     ################################   edit rhsd
 
     'edit rhsd' => 'Editer  la La Ressource Humaine',
+    'la_raison_du_refus' =>"la raison du refus",
+    'motif required' => 'le chams Motif est obligatoire',
+
     'rhsd success in edit' => 'La Ressource Humaine  a été modifer avec succès',
+    'rhsd success in motif' => 'Le Motif a été ajouté avec succès',
     ################################   supprimer rhsd
-    'utilisateur success in supprimer' => 'La Ressource Humaine a été supprimé avec succès',
+    'rhsd success in supprimer' => 'La Ressource Humaine a été supprimé avec succès',
 
 ];

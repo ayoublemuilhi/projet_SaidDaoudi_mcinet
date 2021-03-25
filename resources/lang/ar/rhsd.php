@@ -56,7 +56,11 @@ return [
     ################################   edit rhsd
 
     'edit rhsd' => 'تعديل الموارد البشرية',
+    'la_raison_du_refus' =>"سبب الرفض",
     'rhsd success in edit' => 'تم تعديل الموارد البشرية بنجاح',
+    'rhsd success in motif' => 'تم تسجيل الرفض  بنجاح',
+    'motif required' => ' حقل الرفض إلزامي.',
+
     ################################   supprimer rhsd
     'rhsd success in supprimer' => 'تم حدف الموارد البشرية بنجاح',
 
